@@ -1,0 +1,53 @@
+syntax = "proto3";
+//当前路径
+package proto;
+
+//生成的java文件放在哪个包下面
+option java_package = "com.learn.netty.demo.grpc.idl";
+//生成的java类的名称
+option java_outer_classname = "SutdentProto";
+//生才的java类，多个文件
+option java_multiple_files = true;
+
+
+//传递的数据,结构体
+message MyRequest{
+    string username = 1;
+}
+message MyResponse{
+    string realname = 1;
+}
+
+message StudentRequest{
+    int32 age = 1;
+}
+message StudentResponse{
+    string name = 1;
+    int32 age = 2;
+    string city = 3;
+}
+message StudentResponseList{
+    repeated StudentResponse studentResponse = 1;
+}
+message StreamRequest{
+    string requestInfo = 1;
+}
+message StreamResponse{
+    string responseInfo = 1;
+}
+//调用的接口
+service StudentService{
+    //发送一个数据，返回一个数据
+    rpc GetRealNameByUsername(MyRequest) returns (MyResponse) {}
+
+    //发送一个数据，返回一个流
+    rpc GetStudentByAge(StudentRequest) returns (stream StudentResponse){}
+
+    //发送一个流，返回一个数据
+    rpc GetStudensWrapperByAges(stream StudentRequest) returns (StudentResponse) {}
+
+    //发送一个流，接受一个流
+    rpc BiTalk(stream StreamRequest) returns (stream StreamResponse){}
+
+
+}

@@ -1,0 +1,2 @@
+这是一个基于socket的程序
+netty可以编写服务端还有客户端的socket程序

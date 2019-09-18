@@ -1,0 +1,85 @@
+buildscript {
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath 'com.google.protobuf:protobuf-gradle-plugin:0.8.8'
+    }
+}
+
+plugins {
+    id 'java'
+    id "com.google.protobuf" version "0.8.10"
+}
+group 'learnNetty'
+version '1.0-SNAPSHOT'
+
+
+
+sourceCompatibility = 1.8
+
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    testCompile group: 'junit', name: 'junit', version: '4.12'
+    // https://mvnrepository.com/artifact/io.netty/netty-all
+    compile group: 'io.netty', name: 'netty-all', version: '4.1.39.Final'
+// https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java
+    compile group: 'com.google.protobuf', name: 'protobuf-java', version: '3.9.1'
+// https://mvnrepository.com/artifact/com.google.protobuf/protobuf-java-util
+    compile group: 'com.google.protobuf', name: 'protobuf-java-util', version: '3.9.1'
+
+    implementation 'io.grpc:grpc-netty-shaded:1.23.0'
+    implementation 'io.grpc:grpc-protobuf:1.23.0'
+    implementation 'io.grpc:grpc-stub:1.23.0'
+
+}
+protobuf {
+    protoc {
+        artifact = "com.google.protobuf:protoc:3.9.0"
+    }
+    plugins {
+        grpc {
+            artifact = 'io.grpc:protoc-gen-grpc-java:1.23.0'
+
+        }
+    }
+    generateProtoTasks {
+        all()*.plugins {
+            grpc {
+                outputSubDir = 'java'
+            }
+
+        }
+    }
+    generatedFilesBaseDir = 'src'
+}
+
+//修改指定的资源文件位置
+//https://github.com/google/protobuf-gradle-plugin
+//sourceSets {
+//    main {
+//        proto {
+//            // In addition to the default 'src/main/proto'
+//            srcDir 'src/main/protobuf'
+//            srcDir 'src/main/protocolbuffers'
+//            // In addition to the default '**/*.proto' (use with caution).
+//            // Using an extension other than 'proto' is NOT recommended,
+//            // because when proto files are published along with class files, we can
+//            // only tell the type of a file from its extension.
+//            include '**/*.protodevel'
+//        }
+//        java {
+//
+//        }
+//    }
+//    test {
+//        proto {
+//            // In addition to the default 'src/test/proto'
+//            srcDir 'src/test/protocolbuffers'
+//        }
+//    }
+//}

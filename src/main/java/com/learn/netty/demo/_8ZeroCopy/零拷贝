@@ -1,0 +1,27 @@
+传统的读写数据：
+1.  用户向内核请求read（file）
+2.  内核向磁盘请求read
+3.  磁盘返回数据给内核              （一次复制）
+4.  内核返回数据给用户空间         （二次复制）
+5.  程序对数据操作
+6.  用户将数据发送给内核             （三次复制）
+7.  内核将数据拷贝到磁盘              （四次复制）
+
+升级
+1.  用户向内核请求sendfile（file）
+2.  内核想磁盘请求read
+3.  磁盘返回数据给内核       （一次复制）
+4.  内核buffer拷贝到socketbuffer （二次拷贝）
+5.  socketbuffer拷贝到磁盘中  （三次拷贝）
+
+再次升级：Gather，scatter
+1.  磁盘拷贝数据到内核buffer （一次拷贝）
+2.  内核buffer把地址发送到socketbuffer中 （只需要发送一个指针而已）
+3.  内核buffer拷贝数据回磁盘 （二次拷贝）
+
+
+
+有两个程序来比较拷贝一个文件的速度
+old是传统的通过
+    1.  读取文件    FileInputStream.read()  到一个 []bytes中
+    2.  传输文件    DataOutputStream.write()   这是一个过滤流

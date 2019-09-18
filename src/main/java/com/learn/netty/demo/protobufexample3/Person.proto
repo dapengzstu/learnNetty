@@ -1,0 +1,14 @@
+syntax = "proto2";
+
+package com.learn.netty.protobufexample3;
+
+option optimize_for = SPEED;
+option java_package = "com.learn.netty.protobufexample3";
+option java_outer_classname = "PersonMessage";
+
+
+message Person{
+    optional string name = 1;
+    optional int32 age = 2;
+    optional string address = 3;
+}

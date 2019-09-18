@@ -1,0 +1,14 @@
+在这个文件夹下面，我们要分析netty的一些源码
+1.  EventLoopGroup
+    两个Group
+    bossGroup只是接收到连接后转接给wokerGroup，selector接收到OP_ACCEPT的事件后，通过ServerSocketChannel将SocketChannel通过SelectionKey给调取出来，然后监听这个SocketChannel的事件
+    wokerGroup才是干活的，处理SocketChannel事件
+    EventLoopGroup本身是一个死循环
+2.  serverBootstreap.bind()方法
+3.  ChannelPipline
+    pipline是链接各个Handler的工具
+    ChannelPipline 和 Channel 互相包含彼此
+4.  AdapteiveRecvByteBufAlloccator  自适应的一个Buffer
+5.  ChannelPipline 中有一个属性 AbstractChannelHandlerContext，有头，有尾，是一个Handler的链表 Handler1 -> Handler2 -> Handler3 ->...
+6.
+

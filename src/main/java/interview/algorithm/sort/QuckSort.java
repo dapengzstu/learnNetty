@@ -30,7 +30,7 @@ public class QuckSort {
     }
 
     public static void main(String[] args) {
-        int[] nums = {6,1,2,7,9,3,4,5,10,8};
+        int[] nums = {1,6,5,4,0,3};
         new QuckSort().quickSort(nums,0,nums.length - 1);
         for (int n :
                 nums) {

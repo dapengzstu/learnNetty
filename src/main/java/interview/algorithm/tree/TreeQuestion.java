@@ -305,6 +305,41 @@ public class TreeQuestion {
         }
         return  Math.abs(deepthOfTree(root.left) - deepthOfTree(root.right)) <= 1 ? true : false;
     }
+
+    List<Integer> minArray ;
+    public int updateMinArray(int val,int k){
+        int left = 0;
+        int right = k;
+        while(left < right){
+            int mid = (left + right)/2;
+            if(minArray.get(mid) > val){
+                right = mid;
+            }else{
+                left = mid + 1;
+            }
+        }
+        return left;
+
+    }
+    public void  inOrder(TreeNode root,int k){
+        if(root == null){
+            return ;
+        }
+        if(minArray.size() < k ){
+            minArray.add(root.val);
+        }else if(root.val < minArray.get(k)){
+            updateMinArray(root.val,k);
+        }else{
+            inOrder(root.left,k);
+            inOrder(root.right,k);
+        }
+
+    }
+    public int kthSmallest(TreeNode root, int k) {
+        minArray = new ArrayList<Integer>(k);
+        inOrder(root,k);
+        return minArray.get(k-1);
+    }
     public static void main(String[] args) {
         TreeNode t1 = new TreeNode(1);
         TreeNode t2 = new TreeNode(2);
